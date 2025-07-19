@@ -46,12 +46,45 @@ export default function BracketPage() {
 
   useEffect(() => {
     const data = localStorage.getItem("tournamentData");
-    if (data) {
+    const progress = localStorage.getItem("tournamentProgress");
+    if (progress) {
+      const parsed = JSON.parse(progress);
+      setTournamentData(parsed.tournamentData);
+      setMatches(parsed.matches);
+      setCurrentRound(parsed.currentRound);
+      setChampion(parsed.champion);
+      setThirdPlace(parsed.thirdPlace);
+      setShowFinalBracket(parsed.showFinalBracket);
+    } else if (data) {
       const parsed = JSON.parse(data);
       setTournamentData(parsed);
       generateInitialBracket(parsed);
     }
   }, []);
+
+  // Save progress to localStorage whenever state changes
+  useEffect(() => {
+    if (tournamentData) {
+      localStorage.setItem(
+        "tournamentProgress",
+        JSON.stringify({
+          tournamentData,
+          matches,
+          currentRound,
+          champion,
+          thirdPlace,
+          showFinalBracket,
+        })
+      );
+    }
+  }, [
+    tournamentData,
+    matches,
+    currentRound,
+    champion,
+    thirdPlace,
+    showFinalBracket,
+  ]);
 
   const generateInitialBracket = (data: TournamentData) => {
     const allTeams: { team: string; player: string }[] = [];
@@ -233,6 +266,7 @@ export default function BracketPage() {
 
   const resetEntireTournament = () => {
     localStorage.removeItem("tournamentData");
+    localStorage.removeItem("tournamentProgress");
     router.push("/");
   };
 
@@ -259,26 +293,28 @@ export default function BracketPage() {
 
   if (champion && !showFinalBracket) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0a0f1f] via-[#1e3a8a] to-[#b68a2e] flex items-center justify-center">
-        <Card className="bg-white/10 backdrop-blur-md border-white/20 max-w-2xl w-full mx-4">
-          <CardContent className="flex gap-2 p-8 text-center">
+      <div className="min-h-screen bg-gradient-to-br from-[#0a0f1f] via-[#1e3a8a] to-[#b68a2e] flex items-center justify-center px-2 sm:px-4">
+        <Card className="bg-white/10 backdrop-blur-md border-white/20 max-w-md w-full mx-2 sm:mx-4">
+          <CardContent className="p-4 sm:p-8 text-center">
             <Image
-              className="w-1/2 h-auto"
+              className="mx-auto w-24 h-24 sm:w-1/2 sm:h-auto"
               src="/trophy.png"
               width={200}
               height={200}
               alt="trophy"
             />
-            <div className="w-1/2">
+            <div className="w-full">
               <div className="bg-white/20 rounded-lg p-4 mb-6">
-                <h2 className="text-2xl font-bold text-yellow-300">
+                <h2 className="text-2xl sm:text-3xl font-bold text-yellow-300">
                   {champion.player}
                 </h2>
-                <p className="capitalize text-white">Team: {champion.team}</p>
+                <p className="capitalize text-white text-base sm:text-lg">
+                  Team: {champion.team}
+                </p>
               </div>
-              <div className="flex justify-center gap-2 flex-col">
+              <div className="flex flex-col gap-2 w-full">
                 <Button
-                  onClick={() => setShowFinalBracket(true)} // View Results button
+                  onClick={() => setShowFinalBracket(true)}
                   className="w-full bg-[#1e3a8a] hover:bg-[#0a0f1f]"
                 >
                   View Final Bracket
@@ -308,10 +344,10 @@ export default function BracketPage() {
 
   return (
     <div className="min-h-screen bg-[#0a0f1f]">
-      <div className="max-w-6xl container mx-auto px-4 py-8">
+      <div className="container max-w-6xl mx-auto px-2 sm:px-4 py-4 sm:py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 gap-4 sm:gap-0">
+          <div className="flex items-center gap-4 w-full sm:w-auto">
             <Link href="/">
               <Button
                 variant="outline"
@@ -321,11 +357,11 @@ export default function BracketPage() {
                 Back
               </Button>
             </Link>
-            <h1 className="text-3xl font-bold text-[#b68a2e] flex items-center gap-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#b68a2e] flex items-center gap-2">
               Tournament Bracket
             </h1>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <Button
               onClick={goToPreviousRound}
               variant="outline"
@@ -355,24 +391,24 @@ export default function BracketPage() {
 
         {/* Current Round */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-[#f6cf6e] mb-6 text-center">
+          <h2 className="text-xl sm:text-2xl font-bold text-[#f6cf6e] mb-4 sm:mb-6 text-center">
             {getRoundName(currentRound)}
           </h2>
 
-          <div className="grid gap-4 mx-auto">
+          <div className="grid gap-4 mx-auto grid-cols-1 md:grid-cols-2">
             {matches[currentRound]?.map((match) => (
               <Card
                 key={match.id}
-                className="bg-white/10 backdrop-blur-md border-white/20"
+                className="bg-white/10 backdrop-blur-md border-white/20 w-full"
               >
-                <CardContent className="p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-3 items-center">
                     {/* Team 1 */}
                     <Button
                       variant={
                         match.winner === match.team1Id ? "default" : "outline"
                       }
-                      className={`text-xl capitalize h-auto p-4 ${
+                      className={`text-base sm:text-xl capitalize h-auto p-3 sm:p-4 w-full ${
                         match.winner === match.team1Id
                           ? "bg-[#b68a2e] hover:bg-[#f6cf6e]"
                           : "border-white/30 text-[#b68a2e] hover:bg-white/10"
@@ -399,7 +435,9 @@ export default function BracketPage() {
 
                     {/* VS */}
                     <div className="text-center">
-                      <span className="text-white font-bold text-xl">VS</span>
+                      <span className="text-white font-bold text-lg sm:text-xl">
+                        VS
+                      </span>
                     </div>
 
                     {/* Team 2 */}
@@ -407,7 +445,7 @@ export default function BracketPage() {
                       variant={
                         match.winner === match.team2Id ? "default" : "outline"
                       }
-                      className={`text-xl capitalize h-auto p-4 ${
+                      className={`text-base sm:text-xl capitalize h-auto p-3 sm:p-4 w-full ${
                         match.winner === match.team2Id
                           ? "bg-[#b68a2e] hover:bg-[#f6cf6e]"
                           : "border-white/30 text-[#b68a2e] hover:bg-white/10"
@@ -439,12 +477,14 @@ export default function BracketPage() {
         </div>
 
         {/* Player Stats */}
-        <Card className="bg-white/10 backdrop-blur-md border-white/20 mx-auto">
+        <Card className="bg-white/10 backdrop-blur-md border-white/20 mx-auto w-full max-w-2xl">
           <CardHeader>
-            <CardTitle className="text-[#f6cf6e]">Player Progress</CardTitle>
+            <CardTitle className="text-[#f6cf6e] text-base sm:text-lg">
+              Player Progress
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {tournamentData.players.map((player) => {
                 const teamsRemaining = Object.values(matches)
                   .flat()
@@ -453,8 +493,10 @@ export default function BracketPage() {
 
                 return (
                   <div key={player} className="text-center">
-                    <div className="text-white font-semibold">{player}</div>
-                    <div className="text-white/70 text-sm">
+                    <div className="text-white font-semibold text-sm sm:text-base">
+                      {player}
+                    </div>
+                    <div className="text-white/70 text-xs sm:text-sm">
                       {teamsRemaining} wins
                     </div>
                   </div>

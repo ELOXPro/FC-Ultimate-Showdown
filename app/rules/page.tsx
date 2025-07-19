@@ -52,11 +52,11 @@ export default function RulesPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0e1628]">
-      <div className="max-w-4xl container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-[#0e1628] px-2 sm:px-0">
+      <div className="max-w-4xl container mx-auto px-2 sm:px-4 py-6 sm:py-8">
         {/* Header */}
-        <div className="flex justify-between items-center gap-4 mb-8">
-          <h1 className="text-4xl font-bold text-[#d4af37]">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-4xl font-bold text-[#d4af37]">
             Tournament Rules
           </h1>
           <Link href="/">
@@ -70,34 +70,38 @@ export default function RulesPage() {
           </Link>
         </div>
 
-        <div className=" mx-auto">
+        <div className="mx-auto w-full">
           {/* Main Rules Grid */}
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
             {rules.map((rule, index) => (
               <Card
                 key={index}
-                className="bg-white/5 backdrop-blur-md border-white/10"
+                className="bg-white/5 backdrop-blur-md border-white/10 w-full"
               >
                 <CardHeader>
-                  <CardTitle className="text-[#f6cf6e] flex items-center gap-3">
+                  <CardTitle className="text-[#f6cf6e] flex items-center gap-3 text-base sm:text-lg">
                     {rule.icon}
                     {rule.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-white/90">{rule.description}</p>
+                  <p className="text-white/90 text-sm sm:text-base">
+                    {rule.description}
+                  </p>
                 </CardContent>
               </Card>
             ))}
           </div>
 
           {/* Tournament Structure */}
-          <Card className="bg-white/10 backdrop-blur-md border-white/20 mb-8">
+          <Card className="bg-white/10 backdrop-blur-md border-white/20 mb-6 sm:mb-8 w-full">
             <CardHeader>
-              <CardTitle className="text-[#f6cf6e]">Tournament Structure</CardTitle>
+              <CardTitle className="text-[#f6cf6e] text-base sm:text-lg">
+                Tournament Structure
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="text-white/90">
+              <div className="text-white/90 text-sm sm:text-base">
                 <h3 className="font-semibold mb-2 text-[#0e1628]">
                   Team Selection Process:
                 </h3>
@@ -121,7 +125,7 @@ export default function RulesPage() {
                 </ul>
               </div>
 
-              <div className="text-white/90">
+              <div className="text-white/90 text-sm sm:text-base">
                 <h3 className="font-semibold mb-2 text-[#0e1628]">
                   Bracket Progression:
                 </h3>
@@ -143,7 +147,7 @@ export default function RulesPage() {
                 </ul>
               </div>
 
-              <div className="text-white/90">
+              <div className="text-white/90 text-sm sm:text-base">
                 <h3 className="font-semibold mb-2 text-[#0e1628]">
                   Match Rules:
                 </h3>
@@ -157,16 +161,16 @@ export default function RulesPage() {
           </Card>
 
           {/* Action Buttons */}
-          <div className="flex gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
             <Link href="/">
-              <Button className="bg-gradient-to-r from-[#0a0f1f] via-[#1e3a8a] to-[#b68a2e] hover:from-[#1e3a8a] hover:to-[#b68a2e]">
+              <Button className="w-full sm:w-auto bg-gradient-to-r from-[#0a0f1f] via-[#1e3a8a] to-[#b68a2e] hover:from-[#1e3a8a] hover:to-[#b68a2e]">
                 Start New Tournament
               </Button>
             </Link>
             <Link href="/bracket">
               <Button
                 variant="outline"
-                className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                className="w-full sm:w-auto border-white/30 text-white hover:bg-white/10 bg-transparent"
               >
                 Continue Existing Tournament
               </Button>

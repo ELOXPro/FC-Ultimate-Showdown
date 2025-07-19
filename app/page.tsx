@@ -140,31 +140,42 @@ export default function HomePage() {
 
   if (step === 1) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0a0f1f] via-[#1e3a8a] to-[#b68a2e]">
-        <div className="container mx-auto px-4 py-8">
+      <div className="min-h-screen bg-gradient-to-br from-[#0a0f1f] via-[#1e3a8a] to-[#b68a2e] p-2">
+        <div className="container max-w-4xl mx-auto px-2">
           {/* Header */}
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Image src="/logo.png" width={200} height={200} alt="trophy" />
-              <div className="text-start">
-                <h1 className="text-5xl font-bold text-[#d4af37]">
-                  FC Ultimate Showdown
-                </h1>
-                <p className="text-xl text-[#0e1628]">
-                  Manage competitive online tournaments for FC 25
-                </p>
-                <p className="text-white">
-                  Developed By <Link className="text-[#f6cf6e] hover:text-[#1e3a8a]" href="https://elox.vercel.app"> Elox</Link>
-                </p>
-              </div>
+          <div className="mb-12 flex flex-col md:flex-row items-center justify-between gap-3">
+            <Image
+              src="/logo.png"
+              width={200}
+              height={200}
+              alt="trophy"
+              className="w-32 h-32 md:w-[200px] md:h-[200px]"
+            />
+            <div className="text-center md:text-start">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#d4af37]">
+                FC Ultimate Showdown
+              </h1>
+              <p className="text-base text-white">
+                Manage competitive online football tournaments.
+              </p>
+              <p className="text-white text-xs">
+                Developed By
+                <Link
+                  className="text-[#f6cf6e] hover:text-[#1e3a8a]"
+                  href="https://elox.vercel.app"
+                >
+                  {" "}
+                  Elox
+                </Link>
+              </p>
             </div>
           </div>
 
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Setup Card */}
-            <Card className="bg-white/5 backdrop-blur-md border-white/10">
+            <Card className="bg-white/5 backdrop-blur-md border-white/10 w-full">
               <CardHeader>
-                <CardTitle className="text-[#f6cf6e] flex items-center gap-2">
+                <CardTitle className="text-[#f6cf6e] flex items-center gap-2 text-lg md:text-2xl">
                   <Users className="h-6 w-6" />
                   Tournament Setup
                 </CardTitle>
@@ -172,10 +183,10 @@ export default function HomePage() {
               <CardContent className="space-y-6">
                 {/* Player Count */}
                 <div>
-                  <Label className="text-white mb-3 block">
+                  <Label className="text-white mb-3 block text-sm md:text-base">
                     Number of Players
                   </Label>
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {[2, 3, 4, 5, 6, 7, 8].map((count) => (
                       <Button
                         key={count}
@@ -195,10 +206,10 @@ export default function HomePage() {
 
                 {/* Teams per Player */}
                 <div>
-                  <Label className="text-white mb-3 block">
+                  <Label className="text-white mb-3 block text-sm md:text-base">
                     Teams per Player
                   </Label>
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {[1, 2, 3, 4].map((count) => (
                       <Button
                         key={count}
@@ -220,7 +231,9 @@ export default function HomePage() {
 
                 {/* Player Names */}
                 <div>
-                  <Label className="text-white mb-3 block">Player Names</Label>
+                  <Label className="text-white mb-3 block text-sm md:text-base">
+                    Player Names
+                  </Label>
                   <div className="space-y-3">
                     {playerNames.map((name, index) => (
                       <Input
@@ -248,14 +261,14 @@ export default function HomePage() {
             </Card>
 
             {/* Info Card */}
-            <Card className="bg-white/5 backdrop-blur-md border-white/10">
+            <Card className="bg-white/5 backdrop-blur-md border-white/10 w-full">
               <CardHeader>
-                <CardTitle className="text-[#f6cf6e]">
+                <CardTitle className="text-[#f6cf6e] text-lg md:text-2xl">
                   Tournament Info
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="text-white/90">
+                <div className="text-white/90 text-sm md:text-base">
                   <h3 className="font-semibold mb-2">Team Selection:</h3>
                   <ul className="space-y-1 text-sm">
                     <li>• Each player chooses {teamsPerPlayer} teams</li>
@@ -264,7 +277,7 @@ export default function HomePage() {
                   </ul>
                 </div>
 
-                <div className="text-white/90">
+                <div className="text-white/90 text-sm md:text-base">
                   <h3 className="font-semibold mb-2">Tournament Format:</h3>
                   <ul className="space-y-1 text-sm">
                     <li>• Knockout format for 2, 4, 8, 16 teams</li>
@@ -293,7 +306,9 @@ export default function HomePage() {
       <div className="container max-w-3xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-[#b68a2e] mb-2">Team Selection</h1>
+          <h1 className="text-4xl font-bold text-[#b68a2e] mb-2">
+            Team Selection
+          </h1>
           <p className="text-white">
             Each player enters {teamsPerPlayer} team names
           </p>
@@ -315,18 +330,18 @@ export default function HomePage() {
         </Card>
 
         {/* Player Navigation */}
-        <div className="flex items-center justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
           <Button
             onClick={goToPreviousPlayer}
             disabled={currentPlayerIndex === 0}
             variant="outline"
-            className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+            className="w-full border-white/30 text-white hover:bg-white/10 bg-transparent"
           >
             <ChevronLeft className="h-4 w-4 mr-2" />
             Previous
           </Button>
 
-          <div className="text-center">
+          <div className="w-full text-center">
             <h2 className="text-2xl font-bold text-white">{currentPlayer}</h2>
             <p className="text-white/70">
               {currentPlayerTeams.filter((t) => t.trim().length > 0).length}/
@@ -338,7 +353,7 @@ export default function HomePage() {
             onClick={goToNextPlayer}
             disabled={currentPlayerIndex === playerNames.length - 1}
             variant="outline"
-            className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+            className="w-full border-white/30 text-white hover:bg-white/10 bg-transparent"
           >
             Next
             <ChevronRight className="h-4 w-4 ml-2" />
@@ -398,7 +413,7 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto mt-8">
           <Card className="bg-white/10 backdrop-blur-md border-white/20">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-2">
                 <div>
                   <h3 className="text-[#d4af37] font-semibold mb-2">
                     Selection Progress
@@ -432,22 +447,23 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="flex gap-3">
-                  <Button
-                    onClick={() => setStep(1)}
-                    variant="outline"
-                    className="border-white/30 text-white hover:bg-white/10 bg-transparent"
-                  >
-                    <ChevronLeft className="h-4 w-4 mr-2" />
-                    Back to Setup
-                  </Button>
+                <div className="flex flex-wrap gap-2">
                   <Button
                     onClick={startTournament}
                     disabled={!allPlayersComplete}
-                    className="bg-gradient-to-r from-[#0a0f1f] to-[#b68a2e] hover:from-[#1e3a8a] hover:to-[#b68a2e] text-white font-bold"
+                    className="w-full text-sm bg-gradient-to-r from-[#0a0f1f] to-[#b68a2e] hover:from-[#1e3a8a] hover:to-[#b68a2e] text-white font-bold"
                   >
                     <Zap className="h-5 w-5 mr-2" />
                     Start Tournament
+                  </Button>
+
+                  <Button
+                    onClick={() => setStep(1)}
+                    variant="outline"
+                    className="w-full border-white/30 text-white hover:bg-white/10 bg-transparent"
+                  >
+                    <ChevronLeft className="h-4 w-4 mr-2" />
+                    Back to Setup
                   </Button>
                 </div>
               </div>
